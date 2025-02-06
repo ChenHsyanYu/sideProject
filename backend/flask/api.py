@@ -3,7 +3,7 @@ from db import allProjects  # 匯入 MongoDB 連接
 
 app = Flask(__name__)
 
-@app.route("/allProjects",methods=["GET"])
+@app.route("/")
 def getAllProjects():
-    allProjectsData = list(allProjects.find({},{'_id':0}))
-    return jsonify(allProjectsData)
+    # allProjectsData = list(allProjects.find({},{'_id':0}))
+    return "hello from flask"

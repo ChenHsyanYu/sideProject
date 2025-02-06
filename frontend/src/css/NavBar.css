@@ -1,0 +1,36 @@
+@import '../css/variables.css';
+
+.navBar{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon{
+    font-size: var(--NavIconSize);
+    color: var(--text);
+}
+
+#userIcon{
+    fill: rgba(154, 167, 242, 0.30);
+}
+
+
+.projectTitle{
+    color: var(--text);
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

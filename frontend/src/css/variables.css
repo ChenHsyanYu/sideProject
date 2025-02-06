@@ -1,0 +1,18 @@
+
+:root{
+    --placeholder: #B2B2B2;
+    --blueWide: #C9D0F9;
+    --text: #464A62;
+    --secondaryTitle: #7F87B7;
+    --redWide: #FFC7C9;
+    --blueIcon: #EAEDFF;
+    --redText: #FF0A22;
+    --liner: #7F87B7;
+    --divider: #DFDFDF;
+    --cancelBtn: #F9F9F9;    
+
+    --btnPadding: 4 8;
+    --NavIconSize: 32px;
+    --toolIconSize: 40px;
+    --smIconSize: 24px;
+}

@@ -18,8 +18,7 @@ for path in sys.path:
     print(f"   📂 {path}")
 
 # 🚀 嘗試載入 Flask 應用
-from backend.flask.api import app  # 🚀 修正路徑
-
+from api import app
 
 # if __name__ == "__main__":
 #     app.run(debug=True) 

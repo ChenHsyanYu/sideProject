@@ -1,4 +1,5 @@
 from flask import request, Blueprint, jsonify
+from bson import json_util
 
 
 import sys
@@ -21,4 +22,4 @@ def project():
     collection = database['project']
     
     projectInfo = list(collection.find({}, {"_id":0}))
-    return jsonify(projectInfo)
+    return json_util.dumps(projectInfo), 200, {'Content-Type': 'application/json'}

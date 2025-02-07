@@ -1,17 +1,15 @@
-import psycopg2
-import os
 
-# 🚀 從環境變數取得 DATABASE_URL
-DATABASE_URL = os.environ.get("DATABASE_URL")
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
-# ✅ 確保 DATABASE_URL 存在
-if not DATABASE_URL:
-    raise ValueError("❌ DATABASE_URL 環境變數未設定，請確認 Railway 配置")
+uri = "mongodb+srv://sharonchen82228:01020304@billinprojects.7yw5b.mongodb.net/?retryWrites=true&w=majority&appName=billinProjects"
 
-# 🚀 建立 PostgreSQL 連線
-conn = psycopg2.connect(DATABASE_URL)
-cursor = conn.cursor()
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
 
-# ✅ 測試資料庫是否連線成功
-cursor.execute("SELECT NOW();")
-print("✅ Database Connected:", cursor.fetchone())
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)

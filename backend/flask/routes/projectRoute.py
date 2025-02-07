@@ -1,6 +1,10 @@
 from flask import request, Blueprint, jsonify
 from database.db import client as db
 
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 projectBp = Blueprint("project", __name__)
 
 

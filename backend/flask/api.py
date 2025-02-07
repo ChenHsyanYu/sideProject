@@ -8,6 +8,10 @@ def home():
     # allProjectsData = list(allProjects.find({},{'_id':0}))
     return "hello from flask"
 
+@app.route("/project", methods=["GET"])
+def project():
+    return "get all projects"
+
 
 if __name__ == "__main__":
     app.run(debug=True) 

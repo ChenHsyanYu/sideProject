@@ -17,6 +17,8 @@ def home():
 
 @projectBp.route("/project", methods=["GET"])
 def project():
-    projectCollection = db['projects']['project']
-    projectInfo = list(projectCollection.find({}, {"_id":0}))
+    database= db['projects']
+    collection = database['project']
+    
+    projectInfo = list(collection.find({}, {"_id":0}))
     return jsonify(projectInfo)

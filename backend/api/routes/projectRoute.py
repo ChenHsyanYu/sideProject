@@ -32,13 +32,13 @@ def addProject():
         projectCollection = database["project"]  # 選擇 Collection
         
         # ✅ 從請求中獲取 JSON 資料
-        data = request.json
+        # data = request.json
         
         # ✅ 轉換數據格式
         project_data = {
             "lineliffID": "",
             "projectID": 10,  # 轉換為整數
-            "projectName": data["projectName"],
+            "projectName": "name",
             "isProjectEnded": False,  # 確保是布林值
             "projectExpense": 100,  # 轉換為整數
             "projectBudget": 0,  # 轉換為整數

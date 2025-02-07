@@ -13,10 +13,7 @@ def home():
 
 @app.route("/project", methods=["GET"])
 def project():
-    cursor.execute("SELECT * FROM user")
-    users = cursor.fetchall()
-    cursor.close()
-    return jsonify(users)
+    return jsonify([{'id:': 0}])
 
 
 if __name__ == "__main__":

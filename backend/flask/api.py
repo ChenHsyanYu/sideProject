@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 # from db import allProjects  # 匯入 MongoDB 連接
 import os
 import sys
-from database.db import cursor
+from ..database.db import cursor
 
 app = Flask(__name__)
 

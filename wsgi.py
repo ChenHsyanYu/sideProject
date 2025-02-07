@@ -5,7 +5,7 @@ import os
 project_home = os.path.dirname(os.path.abspath(__file__))
 
 # ✅ 修正路徑，確保 Linux 也能運行
-flask_path = os.path.join(project_home, "backend", "flask")
+flask_path = os.path.join(project_home, "backend", "api")
 
 # ✅ 將 `backend/flask` 加入 `sys.path`
 sys.path.insert(0, flask_path)

@@ -2,4 +2,6 @@ Flask
 pymongo
 gunicorn
 dnspython
-Flask-PyMongo
+Flask-pymongo
+psycopg2
+

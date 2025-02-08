@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from falsk_cors import CORS
 # from db import allProjects  # 匯入 MongoDB 連接
 import os
 import sys
@@ -17,6 +18,7 @@ from routes.projectRoute import projectBp
 from routes.userRoutes import userBp
 
 app = Flask(__name__)
+CORS(app)
 app.register_blueprint(billingBp)
 app.register_blueprint(projectBp)
 app.register_blueprint(userBp)

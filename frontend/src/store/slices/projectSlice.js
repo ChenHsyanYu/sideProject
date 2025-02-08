@@ -4,8 +4,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchProjects = createAsyncThunk(
     "projects/fetchProjects",
     async () => {
-        const response = await fetch(""); // 換成 API
+        const response = await fetch("https://sideproject-production-f126.up.railway.app/project", {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+        }); // 換成 API
         const data = await response.json();
+        console.log("抓取所有資料");
         return data; // payload
     }
 )
@@ -20,7 +25,7 @@ export const addProject = createAsyncThunk(
 )
 
 export const deleteProject = createAsyncThunk(
-    "project/addProject",
+    "project/deleteProject",
     async () => {
         const response = await fetch("");
         const data = await response.json();
@@ -53,6 +58,7 @@ export const projectsSlice = createSlice({
             .addCase(fetchProjects.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.projects = action.payload; // 🔹 更新專案資料
+                // console.log(action.payload)
             })
             .addCase(fetchProjects.rejected, (state, action) => {
                 state.status = "failed";

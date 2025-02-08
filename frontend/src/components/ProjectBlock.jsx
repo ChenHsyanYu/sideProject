@@ -12,8 +12,9 @@ import { FaUtensils } from "react-icons/fa";
 import { RiShoppingBag4Fill } from "react-icons/ri";
 import { PiAirplaneTiltFill } from "react-icons/pi";
 import '../css/startPageAndProjectBlock.css';
+// import 
 
-const ProjectBlock = () =>{
+const ProjectBlock = ({name,expense,budget}) =>{
     const [keyboardIsOpened, setKeyboard] = useState(false);
     const transformEmoji = (codePoint) => {
         return String.fromCodePoint(codePoint)
@@ -91,7 +92,7 @@ const ProjectBlock = () =>{
                             categoryDisabled={false}
                             />
                         }
-                        <div><span id='title'>岡山</span><br/><span id='subTitle'>Okayama</span></div>
+                        <div><span id='title'>{name}</span><br/><span id='subTitle'>Okayama</span></div>
                     </div>       
                     <div><RiArrowRightFill className='smIcons'/></div>
                 </div>

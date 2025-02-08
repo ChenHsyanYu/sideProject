@@ -12,16 +12,17 @@ import { FaUtensils } from "react-icons/fa";
 import { RiShoppingBag4Fill } from "react-icons/ri";
 import { PiAirplaneTiltFill } from "react-icons/pi";
 import '../css/startPageAndProjectBlock.css';
+import categoryIcons from "../components/categoryIcons";
 // import 
 
-const ProjectBlock = ({name,expense,budget}) =>{
+const ProjectBlock = ({projectInfo}) =>{
     const [keyboardIsOpened, setKeyboard] = useState(false);
     const transformEmoji = (codePoint) => {
-        return String.fromCodePoint(codePoint)
+        return String.fromCodePoint(parseInt(codePoint,16))
     }
-    const [emoji, setEmoji] = useState(transformEmoji(0x1F600));
+    const [emoji, setEmoji] = useState(transformEmoji(projectInfo.emoji));
     const selectEmoji = (selectedCodePoint) =>{
-        const codePoint = parseInt(selectedCodePoint, 16);
+        // const codePoint = parseInt(selectedCodePoint, 16);
         setEmoji(transformEmoji(codePoint));
     }
     const keyboardRef = useRef(null);
@@ -107,7 +108,7 @@ const ProjectBlock = ({name,expense,budget}) =>{
                     {categories.map(category => 
                         <div key={category.id} className='expending'>
                             <div className='percentageBar'>
-                                {setIcon(category.name)}
+                                {categoryIcons(category.name)}
                                 <ProgressBar 
                                     now={category.percentage}
                                     id='percentageBar'

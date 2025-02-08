@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from falsk_cors import CORS
+from flask_cors import CORS
 # from db import allProjects  # 匯入 MongoDB 連接
 import os
 import sys

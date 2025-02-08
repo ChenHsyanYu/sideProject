@@ -5,4 +5,4 @@ greenlet
 dnspython
 Flask-pymongo
 psycopg2
-
+flask_cors

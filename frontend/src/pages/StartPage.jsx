@@ -13,10 +13,11 @@ import { fetchProjects } from "../store/slices/projectSlice";
 const StartPage = () => {
     const dispatch = useDispatch();
     const [projects, setProjects] = useState([])
-    const {fetchedProject, status, errorMessage} = useSelector((state) => state.projects.projects)
+    const {fetchedProject, status, errorMessage} = useSelector((state) => state.projects)
 
     useEffect(() =>{
         dispatch(fetchProjects());  // 發送 API 請求
+        console.log(status)
     }, [dispatch]);
     
     useEffect(() => {
@@ -26,6 +27,7 @@ const StartPage = () => {
 
     return(
         <>
+
             <NavBar></NavBar>
             <Tabs
                 defaultActiveKey="all"

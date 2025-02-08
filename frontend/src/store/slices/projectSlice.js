@@ -7,7 +7,7 @@ export const fetchProjects = createAsyncThunk(
         const response = await fetch("https://sideproject-production-f126.up.railway.app/project", {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            mode: 'no-cors',
+            // mode: 'no-cors',
         }); // 換成 API
         const data = await response.json();
         console.log("抓取所有資料");

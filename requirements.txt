@@ -1,6 +1,7 @@
 Flask
 pymongo
 gunicorn
+greenlet
 dnspython
 Flask-pymongo
 psycopg2

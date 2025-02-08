@@ -1,5 +1,6 @@
 from flask import request, Blueprint, jsonify
-from bson import json_util
+from bson import json_util,ObjectId
+# from bson import ObjectId
 import datetime
 
 
@@ -32,16 +33,17 @@ def addProject():
         projectCollection = database["project"]  # 選擇 Collection
         
         # ✅ 從請求中獲取 JSON 資料
-        # data = request.json
+        data = request.json
         
         # ✅ 轉換數據格式
         project_data = {
-            "lineliffID": "",
-            "projectID": 10,  # 轉換為整數
-            "projectName": "name",
-            "isProjectEnded": False,  # 確保是布林值
-            "projectExpense": 100,  # 轉換為整數
-            "projectBudget": 0,  # 轉換為整數
+            "_id": ObjectId(data["_id"]["$oid"]),  # MongoDB ObjectId
+            "lineliffID": data["lineliffID"],
+            "projectID": int(data["projectID"]["$numberInt"]),  # 轉換為整數
+            "projectName": data["projectName"],
+            "isProjectEnded": bool(data["isProjectEnded"]),  # 確保是布林值
+            "projectExpense": int(data["projectExpense"]["$numberInt"]),  # 轉換為整數
+            "projectBudget": int(data["projectBudget"]["$numberInt"]),  # 轉換為整數
             # "startDay": datetime.datetime.utcfromtimestamp(data["startDay"]["$timestamp"]["t"]),  # 轉換為 `datetime`
             # "endDay": datetime.datetime.utcfromtimestamp(data["endDay"]["$timestamp"]["t"]),  # 轉換為 `datetime`
         }

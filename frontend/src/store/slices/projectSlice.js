@@ -114,6 +114,7 @@ export const projectsSlice = createSlice({
             .addCase(fetchOneProject.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.projectBills = action.payload; // 🔹 更新專案資料
+                // console.log(action.payload)
             })
             .addCase(fetchOneProject.rejected, (state, action) => {
                 state.status = "failed";

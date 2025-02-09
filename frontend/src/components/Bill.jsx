@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import '../css/projectPageAndBill.css'
 import { IoIosArrowForward } from "react-icons/io";
 import { FaUtensils } from "react-icons/fa";
+import categoryIcons from './categoryIcons';
 
 const Bill = ({ mode, billContent}) =>{
 
@@ -12,6 +13,7 @@ const Bill = ({ mode, billContent}) =>{
         if(billContent){
             setBill(billContent);
         }
+        console.log(billContent)
     },[billContent] )
 
     return(
@@ -22,15 +24,15 @@ const Bill = ({ mode, billContent}) =>{
                     <div className='wrap'>
                         <div className='wrap2'>
                             <div className='title'>
-                                <p>{billInfo.title}</p>
+                                <p>{billInfo.billingName}</p>
                                 {mode === 'seperate' && <button className={btnClassName}>{mode}</button>}
                             </div>
                             <div className='iconWrap'>
                                 <div className='icons'>
-                                    <FaUtensils className='icon'/>
-                                    <div className='date'>12 Nov 2024</div>
+                                    {categoryIcons(billInfo.billingCategory)}
+                                    <div className='date'>{billInfo.billingCategory}</div>
                                 </div>
-                                <p>$2,400.00</p>
+                                <p>{billInfo.expense}</p>
                             </div>
                         </div>
                         <IoIosArrowForward />

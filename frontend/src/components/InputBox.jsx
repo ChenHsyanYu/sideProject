@@ -1,27 +1,31 @@
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-// import { useEffect } from 'react';
-const InputBox = ({mode,label,defaultValue}) =>{
-    
-    const showMode = mode === 'standard'? <TextField id="standard-basic" hiddenLabel variant="standard" defaultValue={defaultValue}/> : <TextField id="outlined-basic" label={label} variant="outlined" defaultValue={defaultValue}/>
-    
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { useRef,forwardRef } from "react";
+import InputAdornment from '@mui/material/InputAdornment';
 
-    return(
-        <>
+const InputBox = forwardRef(({ mode, label, value},ref ) => {
+    // const inputRef = useRef(null); // 創建 useRef
 
-            <Box
-                component="form"
-                // sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
-                noValidate
-                autoComplete="off"
-            >
-                {showMode}
-                
-            </Box>
-        </>
-    )
-}
+    // const handleClick = () => {
+    //     if (inputRef.current) {
+    //         console.log("輸入框內容:", inputRef.current.value);
+    //     }
+    // };
+
+    return (
+        <Box component="form" noValidate autoComplete="off">
+            <TextField
+                inputRef={ref}// ✅ 正確掛載 ref 到 TextField 的 input
+                id={mode === "standard" ? "standard-basic" : "outlined-basic"}
+                hiddenLabel={mode === "standard"}
+                variant={mode === "standard" ? "standard" : "outlined"}
+                defaultValue={value}
+                // startAdornment={label === 'budget' &&<InputAdornment position="start">$</InputAdornment>}
+                label={mode === "standard" ? "" : label}
+                fullWidth
+            />
+        </Box>
+    );
+})
 
 export default InputBox;

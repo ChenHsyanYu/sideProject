@@ -34,7 +34,7 @@ def addProject():
         
         # ✅ 轉換數據格式
         projectData = {
-            "_id": ObjectId(data["_id"]["$oid"]),  # MongoDB ObjectId
+            # "_id": ObjectId(data["_id"]["$oid"]),  # MongoDB ObjectId
             "lineliffID": data["lineliffID"],
             "projectID": int(data["projectID"]["$numberInt"]),  # 轉換為整數
             "projectName": data["projectName"],

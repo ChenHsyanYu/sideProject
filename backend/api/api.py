@@ -18,7 +18,7 @@ from routes.projectRoute import projectBp
 from routes.userRoutes import userBp
 
 app = Flask(__name__)
-CORS(app)
+CORS(app,resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 app.register_blueprint(billingBp)
 app.register_blueprint(projectBp)
 app.register_blueprint(userBp)

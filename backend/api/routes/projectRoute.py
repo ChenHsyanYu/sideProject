@@ -31,7 +31,7 @@ def addProject():
         
         # ✅ 從請求中獲取 JSON 資料
         data = request.get_json()
-        print("type of data"+type(data))
+        # print("type of data"+type(data))
         
         # ✅ 轉換數據格式
         projectData = {

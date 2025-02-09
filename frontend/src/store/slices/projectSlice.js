@@ -59,19 +59,12 @@ export const projectsSlice = createSlice({
         status: "idle",
         errorMessage: "",
         projectNow:{},
+        projectBills:[],
     },
     reducers:{
         setProjectNow: (state,action) =>{
             state.projectNow = action.payload
         }
-        // 新增專案
-        // addProject: (state, action) => {
-        //     state.projects.push(action.payload);
-        //     // 調刪掉的 API
-        // },
-        // deleteProject: (state, action) => {
-        //     state.projects.slice(action.payload,1);
-        // }
     },
     extraReducers: (builder) => { // 🔹 定義非同步 reducers
         builder
@@ -110,6 +103,19 @@ export const projectsSlice = createSlice({
                 state.projects = action.payload; // 🔹 更新專案資料
             })
             .addCase(deleteProject.rejected, (state, action) => {
+                state.status = "failed";
+                state.errorMessage = action.error.message; // 🔹 設定錯誤訊息
+            });
+        
+        builder
+            .addCase(fetchOneProject.pending, (state) => {
+                state.status = "loading"; // 🔹 API 請求開始，狀態變為 loading
+            })
+            .addCase(fetchOneProject.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.projectBills = action.payload; // 🔹 更新專案資料
+            })
+            .addCase(fetchOneProject.rejected, (state, action) => {
                 state.status = "failed";
                 state.errorMessage = action.error.message; // 🔹 設定錯誤訊息
             });

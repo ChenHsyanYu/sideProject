@@ -44,10 +44,11 @@ def addProject():
 
 @projectBp.route("/project", methods=['GET'])
 def fetchOneProject():
+    
     projectID = request.args.get("projectID")
     data = list(billingCollection.find({'projectID':int(projectID)}, {"_id":0}))
     
     if not data:
         return [],
-    return jsonify(data),200
+    return json_util.dumps(data), 200, {'Content-Type': 'application/json'}
     

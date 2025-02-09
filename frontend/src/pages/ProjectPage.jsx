@@ -1,20 +1,24 @@
 import NavBar from "../components/NavBar";
 import '../css/btn.css';
 import Bill from "../components/Bill";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VictoryPie } from 'victory';
 import '../css/variables.css';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { IoIosAddCircle } from "react-icons/io";
 import EditBillOverlay from "../components/EditBillOverlay";
-import { projectsSlice } from "../store/slices/projectSlice";
-import { useSelector } from "react-redux";
-import { CircularProgress } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchOneProject } from "../store/slices/projectSlice";
 
 const ProjectPage = () =>{
     const project = useSelector((state) => state.projects)
     const projectInfo = project.projectNow;
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(fetchOneProject())
+        // setSeperateBills(projectInfo.projectBills)
+    },[])
     const [expense, setExpense] = useState([
         {
             num: projectInfo.projectExpense,

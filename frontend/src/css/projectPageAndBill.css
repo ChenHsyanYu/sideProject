@@ -96,3 +96,8 @@ p{
     justify-content: center;
 }
 
+.MuiCircularProgress-root{
+    position: relative;
+    top: 0;
+}
+

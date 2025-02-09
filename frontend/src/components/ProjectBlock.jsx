@@ -1,16 +1,8 @@
 import Card from 'react-bootstrap/Card'
-import CardText from 'react-bootstrap/esm/CardText';
 import { EmojiKeyboard } from "reactjs-emoji-keyboard";
-import Button from 'react-bootstrap/Button';
 import { useRef, useState, useEffect } from 'react';
 import Container from 'react-bootstrap/esm/Container';
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col';
 import { RiArrowRightFill } from "react-icons/ri";
-// import ProgressBar from 'react-bootstrap/ProgressBar';
-import { FaUtensils } from "react-icons/fa";
-import { RiShoppingBag4Fill } from "react-icons/ri";
-import { PiAirplaneTiltFill } from "react-icons/pi";
 import '../css/startPageAndProjectBlock.css';
 import categoryIcons from "../components/categoryIcons";
 import ProgressBar from './ProgressBar';
@@ -92,7 +84,7 @@ const ProjectBlock = ({projectInfo}) =>{
                             categoryDisabled={false}
                             />
                         }
-                        <div><span id='title'>{projectInfo.projectName}</span><br/><span id='subTitle'>Okayama</span></div>
+                        <div><span id='title'>{projectInfo.projectName}</span><br/><span id='subTitle'>{projectInfo.projectSubtitle}</span></div>
                     </div>       
                     <div><RiArrowRightFill className='smIcons'/></div>
                 </div>

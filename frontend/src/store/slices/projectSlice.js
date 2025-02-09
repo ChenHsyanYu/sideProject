@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // 管理所有專案用，不包含專案內部
+const header =  { 'Content-Type': 'application/json' }
 
-export const fetchProjects = createAsyncThunk(
-    "projects/fetchProjects",
+export const fetchAllProjects = createAsyncThunk(
+    "projects/fetchAllProjects",
     async () => {
-        const response = await fetch("https://sideproject-production-f126.up.railway.app/project", {
+        const response = await fetch("https://sideproject-production-f126.up.railway.app/allProjects", {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             // mode: 'no-cors',
@@ -37,6 +38,20 @@ export const deleteProject = createAsyncThunk(
     }
 )
 
+export const fetchOneProject = createAsyncThunk(
+    "project/fetchOneProject",
+    async (_, thunkAPI) => {
+        const state = thunkAPI.getState();
+        const projectID = state.projects.projectNow.projectID;
+        const response = await fetch(`https://sideproject-production-f126.up.railway.app/project?projectID=${projectID}`,{
+            method: 'GET',
+            headers:header
+        });
+        const data = await response.json();
+        return data
+    }
+)
+
 export const projectsSlice = createSlice({
     name: 'projects',
     initialState:{
@@ -60,15 +75,15 @@ export const projectsSlice = createSlice({
     },
     extraReducers: (builder) => { // 🔹 定義非同步 reducers
         builder
-            .addCase(fetchProjects.pending, (state) => {
+            .addCase(fetchAllProjects.pending, (state) => {
                 state.status = "loading"; // 🔹 API 請求開始，狀態變為 loading
             })
-            .addCase(fetchProjects.fulfilled, (state, action) => {
+            .addCase(fetchAllProjects.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.projects = action.payload; // 🔹 更新專案資料
                 // console.log(action.payload)
             })
-            .addCase(fetchProjects.rejected, (state, action) => {
+            .addCase(fetchAllProjects.rejected, (state, action) => {
                 state.status = "failed";
                 state.errorMessage = action.error.message; // 🔹 設定錯誤訊息
             });

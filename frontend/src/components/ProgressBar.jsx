@@ -5,7 +5,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 const ProgressBarSet = ({expense, budget,mode}) => {
     const [expensePercentage,setExpense] = useState(Math.round((expense/budget)*100))
     const [budgetPercentage,setBudget] = useState(0)
-    const [labels,setLabels] = useState([`$${expense}`,`$${budget-expense}`])
+    const [labels,setLabels] = useState([`$-${expense}`,`$${budget-expense}`])
     console.log(`expensePercentage: ${expensePercentage} , budgetPercentage: ${budgetPercentage}`)
     useEffect(() => {
         setExpense(Math.round((expense/budget)*100))

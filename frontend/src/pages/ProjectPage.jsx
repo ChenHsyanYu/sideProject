@@ -8,15 +8,20 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { IoIosAddCircle } from "react-icons/io";
 import EditBillOverlay from "../components/EditBillOverlay";
+import { projectsSlice } from "../store/slices/projectSlice";
+import { useSelector } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
 const ProjectPage = () =>{
+    const project = useSelector((state) => state.projects)
+    const projectInfo = project.projectNow;
     const [expense, setExpense] = useState([
         {
-            num: 100,
+            num: projectInfo.projectExpense,
             fill: '#C9D0F9',
         },
         {
-            num: 30,
+            num: projectInfo.projectBudget,
             fill: '#FFC7C9',
         }
     ]);
@@ -73,21 +78,26 @@ const ProjectPage = () =>{
 
     return(
         <>
-            <NavBar></NavBar>
+            <NavBar projectName={projectInfo.projectName}></NavBar>
             <div className="circleArea">
                 <button className="blueBtn">Balance</button>
                 <div className="circle">
+                    {/* <CircularProgress variant="determinate" value={100} thickness={7} size={230} id="back"/>
+                    <CircularProgress variant="determinate" value={25} thickness={7} size={230}/> */}
                     <VictoryPie 
                         padAngle={3}
                         innerRadius={110}
                         cornerRadius={8}
-                        data={expense.map((expNum) => expNum.num)}
+                        
                         style={{
                             labels: {
                                 display: 'none',
                             },
-
-                        }}
+                            // data: {
+                            //     fill: ({ expense }) => expense.fill,
+                            //   },
+                            }}
+                        data={expense.map((expNum) => expNum.num)}
                     />
                 </div>
                 
@@ -98,7 +108,7 @@ const ProjectPage = () =>{
                 id="fill-tab-example"
                 className="mb-3"
                 fill
-                variant='underliine'
+                variant='underline'
             >
                 <Tab eventKey="personal" title="個人花費" className="tab">
                     <div onClick={()=>setOpened(true)}>

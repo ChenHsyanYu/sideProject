@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProjects } from "../store/slices/projectSlice";
+import { fetchAllProjects } from "../store/slices/projectSlice";
 import ProjectBlock from "../components/ProjectBlock";
 import NavBar from "../components/NavBar";
 import Tab from 'react-bootstrap/Tab';
@@ -19,11 +19,11 @@ const StartPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(fetchProjects());  // ✅ 發送 API 請求
+        dispatch(fetchAllProjects());  // ✅ 發送 API 請求
     }, [dispatch]);
 
     // ✅ 正確取得 Redux state
-    const { projects, status, errorMessage } = useSelector((state) => state.projects);
+    const { projects, status, errorMessage, projectNow } = useSelector((state) => state.projects);
 
     console.log("🔍 Redux projects:", projects); // 🔍 確保 Redux 正確存取資料
     console.log("🔍 Redux status:", status);
@@ -36,6 +36,11 @@ const StartPage = () => {
     // ✅ API 錯誤，顯示錯誤訊息
     if (status === "failed") {
         return <p>Error: {errorMessage}</p>;
+    }
+
+    const goProject = (project) =>{
+        dispatch(setProjectNow(project));
+        navigate('/project')
     }
 
     return (
@@ -52,8 +57,8 @@ const StartPage = () => {
                     <Container className="projectCards" >
                         {projects.length > 0 ? (
                             projects.map((project) => (
-                                <div key={project.projectID} onClick={() => dispatch(setProjectNow(project))}>
-                                    <ProjectBlock projectInfo={project} />
+                                <div key={project.projectID} onClick={() => goProject(project)}>
+                                    <ProjectBlock projectInfo={project}/>
                                 </div>
                             ))
                         ) : (

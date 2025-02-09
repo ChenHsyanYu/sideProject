@@ -12,6 +12,7 @@ from database.db import client as db
 projectBp = Blueprint("project", __name__)
 projectDB = db['projects']
 projectCollection = projectDB['project']
+billingCollection = projectDB['billing']
 
 
 
@@ -20,7 +21,7 @@ def home():
     # allProjectsData = list(allProjects.find({},{'_id':0}))
     return "hello from flask"
 
-@projectBp.route("/project", methods=["GET"])
+@projectBp.route("/allProjects", methods=["GET"])
 def project():
     projectInfo = list(projectCollection.find({}, {"_id":0}))
     return json_util.dumps(projectInfo), 200, {'Content-Type': 'application/json'}
@@ -31,21 +32,6 @@ def addProject():
         
         # ✅ 從請求中獲取 JSON 資料
         data = request.get_json()
-        # print("type of data"+type(data))
-        
-        # ✅ 轉換數據格式
-        # projectData = {
-        #     # "_id": ObjectId(data["_id"]["$oid"]),  # MongoDB ObjectId
-        #     "lineliffID": data["lineliffID"],
-        #     "projectID": int(data["projectID"]["$numberInt"]),  # 轉換為整數
-        #     "projectName": data["projectName"],
-        #     "projectSubtitle": data["projectSubtitle"],
-        #     "isProjectEnded": bool(data["isProjectEnded"]),  # 確保是布林值
-        #     "projectExpense": int(data["projectExpense"]["$numberInt"]),  # 轉換為整數
-        #     "projectBudget": int(data["projectBudget"]["$numberInt"]),  # 轉換為整數
-        #     "startTime": data["startTime"],
-        #     "endTime": data['endTime']
-        # }
 
         # ✅ 插入到 MongoDB
         result = projectCollection.insert_one(data)
@@ -55,4 +41,13 @@ def addProject():
     except Exception as e:
         print(f"❌ Error adding project: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
+
+@projectBp.route("/project", methods=['GET'])
+def fetchOneProject():
+    projectID = request.args.get("projectID")
+    data = list(billingCollection.find({'projectID':int(projectID)}, {"_id":0}))
+    
+    if not data:
+        return [],
+    return jsonify(data),200
     

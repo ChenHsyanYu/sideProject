@@ -7,24 +7,34 @@ import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import { RiArrowRightFill } from "react-icons/ri";
-import ProgressBar from 'react-bootstrap/ProgressBar'
+// import ProgressBar from 'react-bootstrap/ProgressBar';
 import { FaUtensils } from "react-icons/fa";
 import { RiShoppingBag4Fill } from "react-icons/ri";
 import { PiAirplaneTiltFill } from "react-icons/pi";
 import '../css/startPageAndProjectBlock.css';
 import categoryIcons from "../components/categoryIcons";
+import ProgressBar from './ProgressBar';
 // import 
 
 const ProjectBlock = ({projectInfo}) =>{
     const [keyboardIsOpened, setKeyboard] = useState(false);
     const transformEmoji = (codePoint) => {
-        return String.fromCodePoint(parseInt(codePoint,16))
-    }
-    const [emoji, setEmoji] = useState(transformEmoji(projectInfo.emoji));
-    const selectEmoji = (selectedCodePoint) =>{
-        // const codePoint = parseInt(selectedCodePoint, 16);
-        setEmoji(transformEmoji(codePoint));
-    }
+        if (!codePoint || isNaN(parseInt(codePoint, 16))) {
+            return String.fromCodePoint(0x1F600); // ✅ 正確：直接返回 Emoji
+        }
+        return String.fromCodePoint(parseInt(codePoint, 16)); // ✅ 正確：轉換為 Emoji
+    };
+    
+    // ✅ 預設 emoji 為 "😀"
+    const [emoji, setEmoji] = useState(() => transformEmoji(projectInfo.emoji));
+    
+    const selectEmoji = (selectedCodePoint) => {
+        const codePoint = parseInt(selectedCodePoint, 16);
+        if (!isNaN(codePoint)) {
+            setEmoji(transformEmoji(codePoint));
+        }
+    };
+    
     const keyboardRef = useRef(null);
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -43,36 +53,25 @@ const ProjectBlock = ({projectInfo}) =>{
         {
             id: 0,
             name: 'food',
-            expense: 3200,
+            expense: 320,
             percentage: 60,
         },
         {
             id: 1,
             name: 'shopping',
-            expense: 1000,
+            expense: 100,
             percentage: 50,
         },
         {
             id: 2,
             name: 'flight',
-            expense: 500,
+            expense: 50,
             percentage: 10,
         }
 
 
     ]);
-
-    const setIcon = (categoryName) =>{
-        switch (categoryName.toLowerCase()){
-            case 'food':
-                return <FaUtensils className='smIcons'/>
-            case 'shopping':
-                return <RiShoppingBag4Fill className='smIcons'/>
-            case 'flight':
-                return <PiAirplaneTiltFill className='smIcons'/>
-        }
-
-    }
+    
     
     return(
         <Card className='card' border='none'>
@@ -93,15 +92,14 @@ const ProjectBlock = ({projectInfo}) =>{
                             categoryDisabled={false}
                             />
                         }
-                        <div><span id='title'>{name}</span><br/><span id='subTitle'>Okayama</span></div>
+                        <div><span id='title'>{projectInfo.projectName}</span><br/><span id='subTitle'>Okayama</span></div>
                     </div>       
                     <div><RiArrowRightFill className='smIcons'/></div>
                 </div>
                 <Container fluid>
-                    <ProgressBar 
-                        now={60}
-                        className='mainBar'
-                    />
+                    <div className='progressing'>
+                        <ProgressBar expense={projectInfo.projectExpense} budget={projectInfo.projectBudget}/>
+                    </div>
                     <div className='subTitles'><span>Expense</span><span>Budget</span></div>
                 </Container>
                 <Container fluid className='expendingGrid'>
@@ -109,10 +107,7 @@ const ProjectBlock = ({projectInfo}) =>{
                         <div key={category.id} className='expending'>
                             <div className='percentageBar'>
                                 {categoryIcons(category.name)}
-                                <ProgressBar 
-                                    now={category.percentage}
-                                    id='percentageBar'
-                                />
+                                <ProgressBar mode='percentage' expense={category.expense} budget={projectInfo.projectBudget}/>
                             </div>
                             
                             <span>${category.expense}</span>

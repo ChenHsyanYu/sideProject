@@ -39,8 +39,12 @@ export const projectsSlice = createSlice({
         projects: [],
         status: "idle",
         errorMessage: "",
+        projectNow:{},
     },
     reducers:{
+        setProjectNow: (state,action) =>{
+            state.projectNow = action.payload
+        }
         // 新增專案
         // addProject: (state, action) => {
         //     state.projects.push(action.payload);
@@ -93,5 +97,6 @@ export const projectsSlice = createSlice({
     }
 })
 
+export const {setProjectNow} = projectsSlice.actions;
 export default projectsSlice.reducer;
 // export const { , deleteProject } = projectsSlice.actions;

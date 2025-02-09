@@ -10,6 +10,8 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from database.db import client as db
 projectBp = Blueprint("project", __name__)
+projectDB = db['projects']
+projectCollection = projectDB['project']
 
 
 
@@ -20,17 +22,12 @@ def home():
 
 @projectBp.route("/project", methods=["GET"])
 def project():
-    database= db['projects']
-    collection = database['project']
-    
-    projectInfo = list(collection.find({}, {"_id":0}))
+    projectInfo = list(projectCollection.find({}, {"_id":0}))
     return json_util.dumps(projectInfo), 200, {'Content-Type': 'application/json'}
 
 @projectBp.route("/addProject", methods=["POST"])
 def addProject():
     try:
-        database = db["projects"]  # 選擇資料庫
-        projectCollection = database["project"]  # 選擇 Collection
         
         # ✅ 從請求中獲取 JSON 資料
         data = request.json
@@ -44,8 +41,8 @@ def addProject():
             "isProjectEnded": bool(data["isProjectEnded"]),  # 確保是布林值
             "projectExpense": int(data["projectExpense"]["$numberInt"]),  # 轉換為整數
             "projectBudget": int(data["projectBudget"]["$numberInt"]),  # 轉換為整數
-            # "startDay": datetime.datetime.utcfromtimestamp(data["startDay"]["$timestamp"]["t"]),  # 轉換為 `datetime`
-            # "endDay": datetime.datetime.utcfromtimestamp(data["endDay"]["$timestamp"]["t"]),  # 轉換為 `datetime`
+            "startTime": datetime.utcfromtimestamp(data["startTime"]).strftime('%Y-%m-%d %H:%M:%S'),  # 轉換為 `datetime`
+            "endTime": datetime.utcfromtimestamp(data["endTime"]).strftime('%Y-%m-%d %H:%M:%S'),  # 轉換為 `datetime`
         }
 
         # ✅ 插入到 MongoDB

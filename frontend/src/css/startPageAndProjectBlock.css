@@ -37,7 +37,7 @@
 }
 .title{
     display: flex;
-    justify-content: center;
+    /* justify-content: ; */
     align-items: center;
     gap: 24px;
 
@@ -63,7 +63,7 @@
     font-size: var(--smIconSize);
 }
 .mainBar{
-    display: flex;
+    /* display: flex; */
     height: 48px;
     padding: 0px 12px;
     align-items: center;
@@ -90,7 +90,8 @@
     justify-content: left;
     align-items: center;
     gap: 10px;
-    width: 90%;
+    width: 100%;
+    height: 16px;
 }
 
 #percentageBar{
@@ -101,12 +102,39 @@
     align-items: flex-start;
     gap: 10px;
 }
+.progress{
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Inter;
+    background-color: #fff;
+    /* height: 16px; */
+    /* padding: 0 12px; */
+}
+
+.progress-bar{
+    color: black !important;
+}
+
+.bg-success{
+    background-color: #C9D0F9 !important;
+    height: 100%;
+}
+.bg-warning{
+    background-color: var(--redWide) !important;
+}
+
+.progressing{
+    height: 48px;
+}
 
 .expending{
     display: flex;
     /* width: 322px; */
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 

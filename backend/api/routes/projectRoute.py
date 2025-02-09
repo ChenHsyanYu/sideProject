@@ -46,9 +46,10 @@ def addProject():
 def fetchOneProject():
     
     projectID = request.args.get("projectID")
+    projectID = int(projectID)
     data = list(billingCollection.find({'projectID':int(projectID)}, {"_id":0}))
     
     if not data:
-        return [],
+        return jsonify([]),
     return json_util.dumps(data), 200, {'Content-Type': 'application/json'}
     

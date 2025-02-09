@@ -12,9 +12,11 @@ import { IoIosAddCircle } from "react-icons/io";
 import '../css/startPageAndProjectBlock.css';
 // import ProgressBar from "../components/ProgressBar";
 import { setProjectNow } from "../store/slices/projectSlice";
+import { useNavigate } from "react-router-dom";
 
 const StartPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchProjects());  // ✅ 發送 API 請求
@@ -67,7 +69,7 @@ const StartPage = () => {
                     Tab content for Adding New Project
                 </Tab>
             </Tabs>
-            <IoIosAddCircle className="toolIcon" />
+            <IoIosAddCircle className="toolIcon" onClick={() => navigate('/newProject')}/>
         </>
     );
 };

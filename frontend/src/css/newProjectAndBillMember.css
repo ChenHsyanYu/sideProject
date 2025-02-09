@@ -124,7 +124,7 @@ h1{
     position: relative;
     display: inline-flex;
     align-items: center;
-    width: 300px;
+    width: 100%;
     gap: 30px;
     color: var(--secondaryTitle);
     font-family: Inter;
@@ -152,6 +152,7 @@ h1{
     flex-direction: column;
     gap: 40px;
     justify-content: flex-start;
+    margin-top: 10px;
 }
 
 .rowNum{

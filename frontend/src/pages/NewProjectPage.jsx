@@ -8,6 +8,8 @@ import '../css/btn.css';
 import { IoIosAddCircle } from "react-icons/io";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import InputBox from "../components/InputBox";
+import { MdOutlinePlace } from "react-icons/md";
 
 
 
@@ -41,6 +43,12 @@ const NewProjectPage = () =>{
         <>
             <h1>新增您的旅程資訊</h1>
             <div className="middle">
+                <div className="block">
+                    <MdOutlinePlace className="smIcon"/>
+                    <InputBox label="Location"/>
+                    <InputBox label="副標題"/>
+                </div>
+                <hr />
                 <div className="block" onClick={() => setCalendar(!isCalendarOpened)}>
                     <PiCalendarBlankDuotone className="smIcon"/>
                     <span>選擇時間</span>

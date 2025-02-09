@@ -34,21 +34,21 @@ def addProject():
         # print("type of data"+type(data))
         
         # ✅ 轉換數據格式
-        projectData = {
-            # "_id": ObjectId(data["_id"]["$oid"]),  # MongoDB ObjectId
-            "lineliffID": data["lineliffID"],
-            "projectID": int(data["projectID"]["$numberInt"]),  # 轉換為整數
-            "projectName": data["projectName"],
-            "projectSubtitle": data["projectSubtitle"],
-            "isProjectEnded": bool(data["isProjectEnded"]),  # 確保是布林值
-            "projectExpense": int(data["projectExpense"]["$numberInt"]),  # 轉換為整數
-            "projectBudget": int(data["projectBudget"]["$numberInt"]),  # 轉換為整數
-            "startTime": data["startTime"],
-            "endTime": data['endTime']
-        }
+        # projectData = {
+        #     # "_id": ObjectId(data["_id"]["$oid"]),  # MongoDB ObjectId
+        #     "lineliffID": data["lineliffID"],
+        #     "projectID": int(data["projectID"]["$numberInt"]),  # 轉換為整數
+        #     "projectName": data["projectName"],
+        #     "projectSubtitle": data["projectSubtitle"],
+        #     "isProjectEnded": bool(data["isProjectEnded"]),  # 確保是布林值
+        #     "projectExpense": int(data["projectExpense"]["$numberInt"]),  # 轉換為整數
+        #     "projectBudget": int(data["projectBudget"]["$numberInt"]),  # 轉換為整數
+        #     "startTime": data["startTime"],
+        #     "endTime": data['endTime']
+        # }
 
         # ✅ 插入到 MongoDB
-        result = projectCollection.insert_one(projectData)
+        result = projectCollection.insert_one(data)
 
         return jsonify({"message": "Project added successfully!"}), 201
 

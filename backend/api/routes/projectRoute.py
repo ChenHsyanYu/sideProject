@@ -30,7 +30,8 @@ def addProject():
     try:
         
         # ✅ 從請求中獲取 JSON 資料
-        data = request.json
+        data = request.get_json()
+        print("type of data"+type(data))
         
         # ✅ 轉換數據格式
         projectData = {
@@ -42,8 +43,8 @@ def addProject():
             "isProjectEnded": bool(data["isProjectEnded"]),  # 確保是布林值
             "projectExpense": int(data["projectExpense"]["$numberInt"]),  # 轉換為整數
             "projectBudget": int(data["projectBudget"]["$numberInt"]),  # 轉換為整數
-            "startTime": datetime.utcfromtimestamp(data["startTime"]).strftime('%Y-%m-%d %H:%M:%S'),  # 轉換為 `datetime`
-            "endTime": datetime.utcfromtimestamp(data["endTime"]).strftime('%Y-%m-%d %H:%M:%S'),  # 轉換為 `datetime`
+            "startTime": data["startTime"],
+            "endTime": data['endTime']
         }
 
         # ✅ 插入到 MongoDB

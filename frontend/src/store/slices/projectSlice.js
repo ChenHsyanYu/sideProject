@@ -21,7 +21,7 @@ export const addProject = createAsyncThunk(
         const response = await fetch("https://sideproject-production-f126.up.railway.app/addProject",{
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: projectInfo,
+            body: JSON.stringify(projectInfo),
         });
         const data = await response.json();
         return data;

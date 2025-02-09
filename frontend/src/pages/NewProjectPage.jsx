@@ -53,17 +53,17 @@ const NewProjectPage = () =>{
                 console.log(`輸入框: ${member.value}`)
             })
             console.log(budgetRef.current.value);
-            dispatch(addProject(JSON.stringify({
+            dispatch(addProject({
                 lineliffID:"",
                 projectID: 0,
                 projectName: inputRef.current.value,
                 projectSubtitle: subTitleRef.current.value,
                 isProjectEnded: false,
                 projectExpense: 0,
-                projectBudget: budgetRef.current.value,
-                startTime: new Date(),
-                endTime: new Date()
-            })))
+                projectBudget: parseFloat(budgetRef.current.value),
+                startTime: new Date().toISOString(),
+                endTime: new Date().toISOString()
+            }))
         }else{
             console.log("Ref 未綁定")
         }

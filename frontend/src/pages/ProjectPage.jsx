@@ -19,7 +19,7 @@ const ProjectPage = () =>{
 
     useEffect(() => {
         dispatch(fetchOneProject());
-    }, []);
+    }, [dispatch]);
     const [personalBills, setPersonalBills] = useState([])
     const [seperateBills, setSeperateBills] = useState([])
     useEffect(() => {
@@ -42,6 +42,7 @@ const ProjectPage = () =>{
 
     const goBillInfo = (bill) =>{
         dispatch(setBillNow(bill))
+        setOpened(true)
     }
     
 
@@ -83,18 +84,18 @@ const ProjectPage = () =>{
                 variant='underline'
             >
                 <Tab eventKey="personal" title="個人花費" className="tab">
-                    <div onClick={()=>setOpened(true)}>
-                        {personalBills.map((bill) => <Bill key={bill.billingID} mode='personal' billContent={bill} onClick={()=>goBillInfo(bill)}/>)}
+                    <div>
+                        {personalBills.map((bill) => <div onClick={() => goBillInfo(bill)}><Bill key={bill.billingID} mode='personal' billContent={bill}/></div>)}
                     </div>
                 </Tab>
                 <Tab eventKey="seperate" title="分帳花費" className="tab">
-                    <div onClick={()=>setOpened(true)}>
-                        {seperateBills.map((bill) => <Bill key={bill.billingID} mode='seperate'billContent={bill} onClick={()=>goBillInfo(bill)}/>)}
+                    <div>
+                        {seperateBills.map((bill) => <div onClick={() => goBillInfo(bill)}><Bill key={bill.billingID} mode='seperate'billContent={bill}/></div>)}
                     </div>
                 </Tab>
             </Tabs>
             <IoIosAddCircle className="toolIcon" onClick={() => setOpened(true)}/>
-            {isDropdownOpened && <EditBillOverlay className='overlay' closeFunction={setOpened} propBillContent={project.billNow}/>}
+            {isDropdownOpened && <EditBillOverlay className='overlay' closeFunction={setOpened}/>}
 
         </>
     )

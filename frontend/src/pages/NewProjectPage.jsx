@@ -56,13 +56,15 @@ const NewProjectPage = () =>{
             dispatch(addProject({
                 lineliffID:"",
                 projectID: 0,
+                creatorLineliffID: "123",
                 projectName: inputRef.current.value,
                 projectSubtitle: subTitleRef.current.value,
                 isProjectEnded: false,
                 projectExpense: 0,
                 projectBudget: parseFloat(budgetRef.current.value),
                 startTime: new Date().toISOString(),
-                endTime: new Date().toISOString()
+                endTime: new Date().toISOString(),
+                emoji: "",
             }))
         }else{
             console.log("Ref 未綁定")
@@ -98,13 +100,13 @@ const NewProjectPage = () =>{
 
                 </div>
                 <hr />
-                <p className="block">分帳人員</p>
+                {/* <p className="block">分帳人員</p>
                 <div className="block1">
                     {billMembers.map((member, id) => 
                         <div className="row"><span className="rowNum">{id + 1}</span> <BillMember memberName={member.name} ref={(el) => memberNameRef.current[id] = el}/></div>
                     )}
                 </div>
-                <button className="addMember">新增分帳人員<IoIosAddCircle/></button>
+                <button className="addMember">新增分帳人員<IoIosAddCircle/></button> */}
                 <button className="comfirm" onClick={getInputText}>確認</button>
             </div>
             

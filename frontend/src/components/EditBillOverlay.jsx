@@ -12,18 +12,27 @@ import "../css/overlay.css";
 import CancelAndComfirmBtn from "./CancelAndComfirmBtn.jsx";
 import InputBox from "./InputBox.jsx";
 import { ImCheckboxChecked,ImCheckboxUnchecked } from "react-icons/im";
+import { useSelector } from "react-redux";
 
-const EditBillOverlay = ({ closeFunction, propBillContent }) => {
-    
-    const [selectedValue, setSelectedValue] = useState(billContent.billingType);
+const EditBillOverlay = ({ closeFunction }) => {
+    const data = useSelector((state) => state.projects)
+    const projectInfo = data.projectNow;
+    const members = projectInfo.members;
+    const billInfo = data.billNow;
+    const billNameRef = useRef("")
+    const billExpenseRef = useRef(0)
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
     };
 
-    // useEffect(() => {
-    //     if(selectedValue === personal)
-    // }, [selectedValue])
+    useEffect(() => {
+        if(billInfo != {}){
+            billNameRef.current.value = billInfo.billingName;
+            billExpenseRef.current.value = billInfo.billingExpense;
+        }
+        
+    }, [])
     
     const [categories, setCategories] = useState([
         { id: 0, categoryName: "Food", className: "iconDiv", isSelected: false },
@@ -48,14 +57,15 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
 
     const overlayRef = useRef(null);
 
-    const [billContent, setBillContent] = useState({})
+    // const [billInfo, setbillInfo] = useState({})
+    const [selectedValue, setSelectedValue] = useState(billInfo.billingType);
 
-    useEffect(() => {
-        if(propBillContent){
-            setBillContent(propBillContent)
-        }
+    // useEffect(() => {
+    //     if(propbillInfo){
+    //         setbillInfo(propbillInfo)
+    //     }
         
-    }, [propBillContent])
+    // }, [propbillInfo])
     
 
     const closeOverlay = () => {
@@ -68,7 +78,7 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
             <div className="outWrap" >
                 <div className="titleWrap">
                     <button className="redBtn">結帳</button>
-                    <div><InputBox mode='standard' label='輸入項目名稱' defaultValue={billContent.billName}/></div>
+                    <div><InputBox mode='standard' label='輸入項目名稱' ref={billNameRef}/></div>
                     <HiMiniTrash />
                 </div>
                 <div className="innerWrap">
@@ -95,7 +105,7 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
                         </Row>
                     </Container>
                     <hr />
-                    <InputBox label='總花費' className='input' value={billContent.billExpense}/>
+                    <InputBox label='總花費' className='input' ref={billExpenseRef} />
                     <div className="btnGroup">
                         <label className="flex justify-center items-center">
                             <Radio
@@ -123,12 +133,12 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
                     </div>
                     <div>
                         <div className="flex">
-                            <BillMemberDropdownPaid selectedValue={selectedValue} defaultPayer={billContent.billPayer}/>
+                            <BillMemberDropdownPaid selectedValue={selectedValue} members={members} defaultPayer={billInfo.billingPayer}/>
                         </div>
                     </div>
                     <div>
                         <div className="flex">
-                            <BillMemberDropdown selectedValue={selectedValue} total={billContent.billExpense}/>
+                            <BillMemberDropdown selectedValue={selectedValue} total={billInfo.billExpense}/>
                         </div>
                     </div>
                     

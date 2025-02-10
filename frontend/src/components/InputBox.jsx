@@ -4,13 +4,6 @@ import { useRef,forwardRef } from "react";
 import InputAdornment from '@mui/material/InputAdornment';
 
 const InputBox = forwardRef(({ mode, label, value},ref ) => {
-    // const inputRef = useRef(null); // 創建 useRef
-
-    // const handleClick = () => {
-    //     if (inputRef.current) {
-    //         console.log("輸入框內容:", inputRef.current.value);
-    //     }
-    // };
 
     return (
         <Box component="form" noValidate autoComplete="off">

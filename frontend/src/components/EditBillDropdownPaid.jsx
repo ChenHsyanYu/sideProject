@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,54 +6,43 @@ import Select from '@mui/material/Select';
 import { useState } from 'react';
 import memberPic from '../assets/324decd33a2ffe73b52ccb22ec6b29eb.jpg';
 import '../css/dropdown.css';
+import { useSelector } from 'react-redux';
 
-export default function EditBillDropdownPaid({selectedValue,defaultPayer}) {
-  const [payer, setPayer] = useState(members.find((member) => member.id === defaultPayer));
-  // const findPayer = () =>{
+const EditBillDropdownPaid = ({ selectedValue, members, defaultPayer }) => {
 
-  // }
-  const members = [
-    {
-        id: 0,
-        name: 'member1',
-    },
-    {
-        id: 1,
-        name: 'member2',
-    },
-    {
-        id: 2,
-        name: 'member3',
-    }
-];
+  // 设置初始 payer
+  const [payer, setPayer] = useState(()=>
+    members.find((member) => member.id === defaultPayer.id) || members[0] || ""
+  );
 
+  // 处理选项变化
   const handleChange = (event) => {
     setPayer(event.target.value);
   };
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth  disabled={selectedValue === 'personal'}>
+      <FormControl fullWidth disabled={selectedValue === 'personal'}>
         <InputLabel id="demo-simple-select-label">付款人</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={payer}
+          defaultChecked={payer}
           label="Pay by"
           onChange={handleChange}
         >
-          {members.map((member)=> 
-            <MenuItem value={member.id}>
+          {members.map((member) => (
+            <MenuItem key={member.id} value={member}>
               <div className='dropdownMenu'>
-                <img className='memberPic' src={memberPic}></img>
-                    <div>
-                        {member.name}
-                    </div>
-                    
-                </div>
-            </MenuItem>)}
+                <img className='memberPic' src={memberPic} alt="member" />
+                <div>{member.memberName}</div>
+              </div>
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
   );
-}
+};
+
+export default EditBillDropdownPaid;

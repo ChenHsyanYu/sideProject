@@ -18,12 +18,13 @@ const StartPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(fetchAllProjects());  // ✅ 發送 API 請求
-    }, [dispatch]);
+    
 
     // ✅ 正確取得 Redux state
     const { projects, status, errorMessage, projectNow } = useSelector((state) => state.projects);
+    useEffect(() => {
+        dispatch(fetchAllProjects());  // ✅ 發送 API 請求
+    }, [dispatch]);
 
     console.log("🔍 Redux projects:", projects); // 🔍 確保 Redux 正確存取資料
     console.log("🔍 Redux status:", status);

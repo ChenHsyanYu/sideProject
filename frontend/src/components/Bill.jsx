@@ -5,7 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaUtensils } from "react-icons/fa";
 import categoryIcons from './categoryIcons';
 
-const Bill = ({ mode, billContent}) =>{
+const Bill = ({ mode, billContent, onClicked}) =>{
 
     const [btnClassName, setClassName] = useState('redBtn');
     const [billInfo, setBill] = useState({});
@@ -20,12 +20,12 @@ const Bill = ({ mode, billContent}) =>{
         <>
 
             {/* {mode === 'seperate' &&  */}
-                <div className='outer'>
+                <div className='outer' onClick={() => onClicked}>
                     <div className='wrap'>
                         <div className='wrap2'>
                             <div className='title'>
                                 <p>{billInfo.billingName}</p>
-                                {mode === 'seperate' && <button className={btnClassName}>{billInfo.billingStatus ? "sent": "not yet"}</button>}
+                                {mode === 'seperate' && <button className={billInfo.billingStatus? 'blueBtn' : 'redBtn'}>{billInfo.billingStatus ? "sent": "not yet"}</button>}
                             </div>
                             <div className='iconWrap'>
                                 <div className='icons'>

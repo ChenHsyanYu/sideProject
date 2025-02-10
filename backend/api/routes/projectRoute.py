@@ -11,6 +11,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'
 from database.db import client as db
 projectBp = Blueprint("project", __name__)
 projectDB = db['projects']
+userDB = db['user']
+memberCollection = userDB['member']
+projectMemberCollection = projectDB['project_members']
 projectCollection = projectDB['project']
 billingCollection = projectDB['billing']
 
@@ -29,18 +32,44 @@ def project():
 @projectBp.route("/addProject", methods=["POST"])
 def addProject():
     try:
-        
-        # ✅ 從請求中獲取 JSON 資料
+        # ✅ 获取 JSON 数据
         data = request.get_json()
+        creatorLineliffID = data["creatorLineliffID"]  # 确保前端传递了创建者的 Line ID
 
-        # ✅ 插入到 MongoDB
-        result = projectCollection.insert_one(data)
+        # ✅ 获取当前最大 projectID
+        last_project = projectCollection.find_one({}, sort=[("projectID", -1)])
+        new_project_id = (last_project["projectID"] + 1) if last_project else 0
 
-        return jsonify({"message": "Project added successfully!"}), 201
+        # ✅ 赋值新的 projectID
+        data["projectID"] = new_project_id
+
+        # ✅ 插入新的项目到 `projectCollection`
+        projectCollection.insert_one(data)
+
+        # ✅ 查找 `memberCollection` 是否有该创建者
+        member = memberCollection.find_one({"userLineliffID": creatorLineliffID})
+
+        if member:
+            # ✅ 如果用户已存在，则更新其 `projects` 数组
+            memberCollection.update_one(
+                {"userLineliffID": creatorLineliffID},
+                {"$addToSet": {"projects": new_project_id}}  # 避免重复加入
+            )
+        projectMemberCollection.insert_one(jsonify({
+            'projectID':new_project_id,
+            'members':[{'memberID':0, 'lineliffID': creatorLineliffID}]
+        }))
+
+        return jsonify({
+            "message": "Project added successfully!",
+            "projectID": new_project_id
+        }), 201
 
     except Exception as e:
         print(f"❌ Error adding project: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
+
+
 
 @projectBp.route("/project", methods=['GET'])
 def fetchOneProject():

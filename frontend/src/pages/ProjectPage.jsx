@@ -10,15 +10,18 @@ import { IoIosAddCircle } from "react-icons/io";
 import EditBillOverlay from "../components/EditBillOverlay";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchOneProject } from "../store/slices/projectSlice";
+import { setBillNow } from "../store/slices/projectSlice";
 
 const ProjectPage = () =>{
     const project = useSelector((state) => state.projects)
     const projectInfo = project.projectNow;
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(fetchOneProject());
     }, []);
-    
+    const [personalBills, setPersonalBills] = useState([])
+    const [seperateBills, setSeperateBills] = useState([])
     useEffect(() => {
         if (!project.projectBills || project.projectBills.length === 0) return; // ✅ 避免 `undefined`
     
@@ -36,16 +39,14 @@ const ProjectPage = () =>{
             fill: '#FFC7C9',
         }
     ]);
-    const [personalBills, setPersonalBills] = useState([])
 
-    const [seperateBills, setSeperateBills] = useState([])
+    const goBillInfo = (bill) =>{
+        dispatch(setBillNow(bill))
+    }
+    
 
 
     const [isDropdownOpened, setOpened] = useState(false);
-    const overlayRef = useRef(null);
-    // const handleClickOverlay = (event) =>{
-    //     if(overlayRef.current)
-    // }
 
     return(
         <>
@@ -83,17 +84,17 @@ const ProjectPage = () =>{
             >
                 <Tab eventKey="personal" title="個人花費" className="tab">
                     <div onClick={()=>setOpened(true)}>
-                        {personalBills.map((bill) => <Bill key={bill.billingID} mode='personal' billContent={bill} />)}
+                        {personalBills.map((bill) => <Bill key={bill.billingID} mode='personal' billContent={bill} onClick={()=>goBillInfo(bill)}/>)}
                     </div>
                 </Tab>
                 <Tab eventKey="seperate" title="分帳花費" className="tab">
                     <div onClick={()=>setOpened(true)}>
-                        {seperateBills.map((bill) => <Bill key={bill.billingID} mode='seperate'billContent={bill}/>)}
+                        {seperateBills.map((bill) => <Bill key={bill.billingID} mode='seperate'billContent={bill} onClick={()=>goBillInfo(bill)}/>)}
                     </div>
                 </Tab>
             </Tabs>
             <IoIosAddCircle className="toolIcon" onClick={() => setOpened(true)}/>
-            {isDropdownOpened && <EditBillOverlay className='overlay' closeFunction={setOpened}/>}
+            {isDropdownOpened && <EditBillOverlay className='overlay' closeFunction={setOpened} propBillContent={project.billNow}/>}
 
         </>
     )

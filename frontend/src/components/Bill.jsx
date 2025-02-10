@@ -38,30 +38,6 @@ const Bill = ({ mode, billContent}) =>{
                         <IoIosArrowForward />
                     </div>
                 </div>
-                {/* } */}
-
-            {/* {mode === 'personal' && 
-                <div className='outer'>
-                    <div className='wrap'>
-                        <div className='wrap2'>
-                            <div className='title'>
-                                <p>唐吉訶德</p>
-                                <button className={btnClassName}>{status}</button>
-                            </div>
-                            <div className='iconWrap'>
-                                <div className='icons'>
-                                    <FaUtensils />
-                                    <div>12 Nov 2024</div>
-                                </div>
-                                <p>$2,400.00</p>
-                            </div>
-                        </div>
-                        <IoIosArrowForward />
-                    </div>
-                </div>} */}
-            
-
-
             
         </>
     )

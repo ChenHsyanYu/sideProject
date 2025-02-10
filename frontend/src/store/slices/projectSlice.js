@@ -60,10 +60,14 @@ export const projectsSlice = createSlice({
         errorMessage: "",
         projectNow:{},
         projectBills:[],
+        billNow:{},
     },
     reducers:{
         setProjectNow: (state,action) =>{
             state.projectNow = action.payload
+        },
+        setBillNow:(state,action) =>{
+            state.billNow = action.payload;
         }
     },
     extraReducers: (builder) => { // 🔹 定義非同步 reducers
@@ -123,6 +127,6 @@ export const projectsSlice = createSlice({
     }
 })
 
-export const {setProjectNow} = projectsSlice.actions;
+export const {setProjectNow, setBillNow} = projectsSlice.actions;
 export default projectsSlice.reducer;
 // export const { , deleteProject } = projectsSlice.actions;

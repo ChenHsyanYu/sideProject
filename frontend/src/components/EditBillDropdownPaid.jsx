@@ -8,8 +8,11 @@ import { useState } from 'react';
 import memberPic from '../assets/324decd33a2ffe73b52ccb22ec6b29eb.jpg';
 import '../css/dropdown.css';
 
-export default function EditBillDropdownPaid({selectedValue}) {
-  const [payer, setPayer] = useState("");
+export default function EditBillDropdownPaid({selectedValue,defaultPayer}) {
+  const [payer, setPayer] = useState(members.find((member) => member.id === defaultPayer));
+  // const findPayer = () =>{
+
+  // }
   const members = [
     {
         id: 0,

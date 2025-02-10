@@ -15,7 +15,7 @@ import { ImCheckboxChecked,ImCheckboxUnchecked } from "react-icons/im";
 
 const EditBillOverlay = ({ closeFunction, propBillContent }) => {
     
-    const [selectedValue, setSelectedValue] = useState('personal');
+    const [selectedValue, setSelectedValue] = useState(billContent.billingType);
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
@@ -48,12 +48,7 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
 
     const overlayRef = useRef(null);
 
-    const [billContent, setBillContent] = useState({
-        title: "",
-        category: 0,
-        amount: 0,
-        type: 'personal',
-    })
+    const [billContent, setBillContent] = useState({})
 
     useEffect(() => {
         if(propBillContent){
@@ -73,7 +68,7 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
             <div className="outWrap" >
                 <div className="titleWrap">
                     <button className="redBtn">結帳</button>
-                    <div><InputBox mode='standard' label='輸入項目名稱' defaultValue={billContent.title}/></div>
+                    <div><InputBox mode='standard' label='輸入項目名稱' defaultValue={billContent.billName}/></div>
                     <HiMiniTrash />
                 </div>
                 <div className="innerWrap">
@@ -100,7 +95,7 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
                         </Row>
                     </Container>
                     <hr />
-                    <InputBox label='總花費' className='input'/>
+                    <InputBox label='總花費' className='input' value={billContent.billExpense}/>
                     <div className="btnGroup">
                         <label className="flex justify-center items-center">
                             <Radio
@@ -128,12 +123,12 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
                     </div>
                     <div>
                         <div className="flex">
-                            <BillMemberDropdownPaid selectedValue={selectedValue}/>
+                            <BillMemberDropdownPaid selectedValue={selectedValue} defaultPayer={billContent.billPayer}/>
                         </div>
                     </div>
                     <div>
                         <div className="flex">
-                            <BillMemberDropdown selectedValue={selectedValue} total={1000}/>
+                            <BillMemberDropdown selectedValue={selectedValue} total={billContent.billExpense}/>
                         </div>
                     </div>
                     

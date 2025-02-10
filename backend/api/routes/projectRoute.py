@@ -51,5 +51,5 @@ def fetchOneProject():
     
     if not data:
         return jsonify([]),
-    return json_util.dumps(data), 200, {'Content-Type': 'application/json'}
+    return jsonify(data), 200, {'Content-Type': 'application/json'}
     

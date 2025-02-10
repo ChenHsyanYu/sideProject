@@ -50,6 +50,6 @@ def fetchOneProject():
     data = list(billingCollection.find({'projectID':int(projectID)}, {"_id":0}))
     
     if not data:
-        return jsonify([]),
+        return jsonify([]),200
     return jsonify(data), 200, {'Content-Type': 'application/json'}
     

@@ -25,14 +25,14 @@ const Bill = ({ mode, billContent}) =>{
                         <div className='wrap2'>
                             <div className='title'>
                                 <p>{billInfo.billingName}</p>
-                                {mode === 'seperate' && <button className={btnClassName}>{mode}</button>}
+                                {mode === 'seperate' && <button className={btnClassName}>{billInfo.billingStatus ? "sent": "not yet"}</button>}
                             </div>
                             <div className='iconWrap'>
                                 <div className='icons'>
                                     {categoryIcons(billInfo.billingCategory)}
-                                    <div className='date'>{billInfo.billingCategory}</div>
+                                    <div className='date'>{billInfo.billingDate}</div>
                                 </div>
-                                <p>{billInfo.expense}</p>
+                                <p>{billInfo.billingExpense}</p>
                             </div>
                         </div>
                         <IoIosArrowForward />

@@ -9,8 +9,9 @@ billingDB = db['projects']
 billingCollection = billingDB['billing']
 
 
-# @billingBp.route('/fetchBills', methods=['GET'])
+# @billingBp.route('/billInfo', methods=['GET'])
 # def fetchBills():
+#     data = 
     
     
  

@@ -26,7 +26,7 @@ const calculateAmount = (total, divider) => {
   return total / divider;
 };
 
-export default function MultipleSelectChip({ total = 1000 }) {
+export default function MultipleSelectChip({ total, selectedValue}) {
   const theme = useTheme();
 
   const [members, setMembers] = useState([
@@ -61,7 +61,7 @@ export default function MultipleSelectChip({ total = 1000 }) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 300 }} disabled={selectedValue === 'personal'}>
         <InputLabel id="demo-multiple-chip-label">分款人</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
@@ -81,6 +81,7 @@ export default function MultipleSelectChip({ total = 1000 }) {
         >
           {members.map((member) => (
             <MenuItem
+              // disabled={selectedValue === 'personal'}
               key={member.id}
               value={member.name}
               style={{ fontWeight: personName.includes(member.name) ? theme.typography.fontWeightMedium : theme.typography.fontWeightRegular }}

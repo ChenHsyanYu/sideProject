@@ -8,7 +8,7 @@ import { useState } from 'react';
 import memberPic from '../assets/324decd33a2ffe73b52ccb22ec6b29eb.jpg';
 import '../css/dropdown.css';
 
-export default function EditBillDropdownPaid() {
+export default function EditBillDropdownPaid({selectedValue}) {
   const [payer, setPayer] = useState("");
   const members = [
     {
@@ -31,7 +31,7 @@ export default function EditBillDropdownPaid() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth  disabled={selectedValue === 'personal'}>
         <InputLabel id="demo-simple-select-label">付款人</InputLabel>
         <Select
           labelId="demo-simple-select-label"

@@ -5,14 +5,26 @@ import "../css/btn.css";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
-import Form from "react-bootstrap/Form";
+import Radio from '@mui/material/Radio';
 import BillMemberDropdown from "./BillMemberDropdownOwed.jsx";
 import BillMemberDropdownPaid from "./EditBillDropdownPaid.jsx";
 import "../css/overlay.css";
 import CancelAndComfirmBtn from "./CancelAndComfirmBtn.jsx";
 import InputBox from "./InputBox.jsx";
+import { ImCheckboxChecked,ImCheckboxUnchecked } from "react-icons/im";
 
 const EditBillOverlay = ({ closeFunction, propBillContent }) => {
+    
+    const [selectedValue, setSelectedValue] = useState('personal');
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
+    // useEffect(() => {
+    //     if(selectedValue === personal)
+    // }, [selectedValue])
+    
     const [categories, setCategories] = useState([
         { id: 0, categoryName: "Food", className: "iconDiv", isSelected: false },
         { id: 1, categoryName: "Shopping", className: "iconDiv", isSelected: false },
@@ -90,17 +102,38 @@ const EditBillOverlay = ({ closeFunction, propBillContent }) => {
                     <hr />
                     <InputBox label='總花費' className='input'/>
                     <div className="btnGroup">
-                        <Form.Check inline label="個人花費" name="group" type="radio" id={0} />
-                        <Form.Check inline label="分帳花費" name="group" type="radio" id={1} />
+                        <label className="flex justify-center items-center">
+                            <Radio
+                                checked={selectedValue === 'personal'}
+                                onChange={(e) => handleChange(e)}
+                                value="personal"
+                                name="radio-buttons"
+                                inputProps={{ 'aria-label': 'A' }}
+                                checkedIcon={<ImCheckboxChecked style={{color: '#7F87B7'}}/>}
+                                icon={<ImCheckboxUnchecked />}
+                            />個人花費
+                        </label>
+                        <label>
+                            <Radio
+                                checked={selectedValue === 'seperate'}
+                                onChange={(e) =>handleChange(e)}
+                                value="seperate"
+                                name="radio-buttons"
+                                inputProps={{ 'aria-label': 'B' }}
+                                checkedIcon={<ImCheckboxChecked style={{color: '#7F87B7'}}/>}
+                                icon={<ImCheckboxUnchecked />}
+                            />分帳花費
+                        </label>
+                        
                     </div>
                     <div>
                         <div className="flex">
-                            <BillMemberDropdownPaid />
+                            <BillMemberDropdownPaid selectedValue={selectedValue}/>
                         </div>
                     </div>
                     <div>
                         <div className="flex">
-                            <BillMemberDropdown />
+                            <BillMemberDropdown selectedValue={selectedValue} total={1000}/>
                         </div>
                     </div>
                     

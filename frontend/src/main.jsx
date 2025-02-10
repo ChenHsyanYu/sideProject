@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ProjectPage from './pages/ProjectPage.jsx';
 import store from './store/store.js';
 import { Provider } from 'react-redux'
+import './css/tailwind.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

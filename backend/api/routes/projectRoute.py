@@ -38,7 +38,7 @@ def addProject():
 
         # ✅ 获取当前最大 projectID
         last_project = projectCollection.find_one({}, sort=[("projectID", -1)])
-        new_project_id = (last_project["projectID"] + 1) if last_project else 0
+        new_project_id = (last_project["projectID"] + 1) if last_project else 1
 
         # ✅ 赋值新的 projectID
         data["projectID"] = new_project_id
@@ -55,10 +55,10 @@ def addProject():
                 {"userLineliffID": creatorLineliffID},
                 {"$addToSet": {"projects": new_project_id}}  # 避免重复加入
             )
-        projectMemberCollection.insert_one(jsonify({
+        projectMemberCollection.insert_one({
             'projectID':new_project_id,
             'members':[{'memberID':0, 'lineliffID': creatorLineliffID}]
-        }))
+        })
 
         return jsonify({
             "message": "Project added successfully!",

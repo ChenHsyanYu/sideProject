@@ -54,7 +54,7 @@ const NewProjectPage = () =>{
             })
             console.log(budgetRef.current.value);
             dispatch(addProject({
-                lineliffID:"",
+                // lineliffID:"",
                 projectID: 0,
                 creatorLineliffID: "123",
                 projectName: inputRef.current.value,

@@ -25,9 +25,35 @@ def home():
     return "hello from flask"
 
 @projectBp.route("/allProjects", methods=["GET"])
-def project():
-    projectInfo = list(projectCollection.find({}, {"_id":0}))
-    return json_util.dumps(projectInfo), 200, {'Content-Type': 'application/json'}
+def get_all_projects():
+    try:
+        # ✅ 取得 `userLineliffID` 參數
+        userLineliffID = request.args.get('userLineliffID')
+
+        if not userLineliffID:
+            return jsonify({"error": "Missing userLineliffID"}), 400
+
+        # ✅ 在 `memberCollection` 找到對應的用戶
+        user = memberCollection.find_one({'userLineliffID': userLineliffID})
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # ✅ 取得該用戶的 `projects` 陣列
+        projectIDs = user.get("projects", [])
+
+        if not projectIDs:
+            return jsonify({"projects": []}), 200  # 如果該用戶沒有任何專案
+
+        # ✅ 在 `projectCollection` 中查找所有符合的 `projectID`
+        projects = list(projectCollection.find({"projectID": {"$in": projectIDs}}, {"_id": 0}))
+
+        return json_util.dumps({"projects": projects}), 200, {'Content-Type': 'application/json'}
+
+    except Exception as e:
+        print(f"❌ Error fetching projects: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
+
 
 @projectBp.route("/addProject", methods=["POST"])
 def addProject():

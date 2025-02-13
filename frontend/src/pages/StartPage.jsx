@@ -19,13 +19,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import '../css/btn.css';
 import dayjs from "dayjs";
 
-const EditModal = () =>{
-    return(
-        <>
-        </>
-    )
-}
-
 const LeftClickModal = ({showModal, setModalStatus}) =>{
     const projectData = useSelector((state) => state.projects);
     const projectInfo = projectData.projectNow;
@@ -34,18 +27,8 @@ const LeftClickModal = ({showModal, setModalStatus}) =>{
     const startRef = useRef(null);
     const endRef = useRef(null);
     const subtitleRef = useRef(null);
+    const dispatch = useDispatch();
     const [isEditable, setEditable] = useState(false)
-    // let isEditable = false;
-
-    // useEffect(()=>{
-    //     if(showModal && projectInfo){
-    //         projectNameRef.current.value = projectInfo.projectName;
-    //         budgetRef.current.value = projectInfo.projectBudget;
-    //         startRef.current.value = projectInfo.startTime;
-    //         endRef.current.value = projectInfo.endTime;
-    //         subtitleRef.current.value = projectInfo.projectSubtitle;
-    //     }
-    // },[showModal,projectInfo])
 
     const editProject = async () =>{
         await fetch('https://sideproject-production-f126.up.railway.app/editProject',{
@@ -54,6 +37,8 @@ const LeftClickModal = ({showModal, setModalStatus}) =>{
             body:JSON.stringify({...projectInfo, projectName: projectNameRef.current.value, projectSubtitle: subtitleRef.current.value ,projectBudget: budgetRef.current.value, startTime: startRef.current.value, endTime: endRef.current.value})
         })
         setEditable(false);
+        setModalStatus(false);
+        dispatch(fetchAllProjects())
     }
     
     const deleteProject = async () =>{
@@ -61,12 +46,15 @@ const LeftClickModal = ({showModal, setModalStatus}) =>{
             method: 'DELETE',
             headers:{'Content-Type': 'application/json'}
         })
+        setModalStatus(false);
+        dispatch(setProjectNow({}))
+        dispatch(fetchAllProjects())
     }
     return (
         <Modal show={showModal} onHide={() => setModalStatus(false)} centered>
           {/* <Modal.Dialog> */}
             <Modal.Header>
-                {isEditable ? <p>編輯 {projectInfo.projectName} 資訊</p> : <p>對 <span style={{color: '#464A62', fontWeight: 600}}>{projectInfo.projectName}</span> 進行以下操作：</p>}
+                {isEditable ? <p>編輯 <span style={{color: '#464A62', fontWeight: 600}}>{projectInfo.projectName}</span> 資訊</p> : <p>對 <span style={{color: '#464A62', fontWeight: 600}}>{projectInfo.projectName}</span> 進行以下操作：</p>}
             </Modal.Header>
     
             <Modal.Body bsPrefix="modalBody" style={{display: 'flex',justifyContent: 'space-between'}}>
@@ -113,8 +101,10 @@ const StartPage = () => {
 
     // ✅ 正確取得 Redux state
     const { projects, status, errorMessage, projectNow } = useSelector((state) => state.projects);
+    const user = useSelector((state) => state.user);
+    const userID = user.userLineliffID;
     useEffect(() => {
-        dispatch(fetchAllProjects());  // ✅ 發送 API 請求
+        dispatch(fetchAllProjects(userID));  // ✅ 發送 API 請求
     }, [dispatch]);
 
     // ✅ API 請求中，顯示 Loading

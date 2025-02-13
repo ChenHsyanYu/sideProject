@@ -1,8 +1,3 @@
-// import colors from "../colors";
-import Navbar from 'react-bootstrap/Navbar'
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { LuMenu } from "react-icons/lu";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import { AiOutlineScan } from "react-icons/ai";

@@ -4,12 +4,11 @@ const header =  { 'Content-Type': 'application/json' }
 
 export const fetchAllProjects = createAsyncThunk(
     "projects/fetchAllProjects",
-    async () => {
-        const response = await fetch("https://sideproject-production-f126.up.railway.app/allProjects", {
+    async (userID) => {
+        const response = await fetch(`https://sideproject-production-f126.up.railway.app/allProjects?userLineliffID=${userID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            // mode: 'no-cors',
-        }); // 換成 API
+        });
         const data = await response.json();
         console.log("抓取所有資料");
         return data; // payload

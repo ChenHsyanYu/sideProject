@@ -129,7 +129,7 @@ def edit_project():
     try:
         # ✅ 获取 JSON 数据
         data = request.get_json()
-        projectId = data.get("projectId")  # 获取 projectId
+        projectId = data.get("projectID")  # 获取 projectId
 
         if not projectId:
             return jsonify({"error": "Missing projectId"}), 400

@@ -86,7 +86,7 @@ const LeftClickModal = ({showModal, setModalStatus}) =>{
                     <Calendar label="編輯旅遊起始時間" value={dayjs(projectInfo.startTime)} ref={startRef}/>
                     <Calendar label="編輯旅遊結束時間" value={dayjs(projectInfo.endTime)} ref={endRef}/>
                     <InputBox label="編輯預算" value={projectInfo.projectBudget} ref={budgetRef}/>
-                    <div style={{textAlign: 'center'}}><button className="comfirmBtn" style={{borderRadius: 10, padding: 5}} onClick={() => editProject}>確認更改</button></div>
+                    <div style={{textAlign: 'center'}}><button className="comfirmBtn" onClick={() => editProject()} style={{borderRadius: 10, padding: 5}}>確認更改</button></div>
                     
                 </Modal.Body>
             }

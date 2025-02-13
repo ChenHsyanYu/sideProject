@@ -140,15 +140,40 @@ def delete_project():
         return jsonify({"error": "Internal Server Error"}), 500
 
 @projectBp.route("/project", methods=['GET'])
-def fetchOneProject():
-    
-    projectID = request.args.get("projectID")
-    projectID = int(projectID)
-    data = list(billingCollection.find({'projectID':int(projectID)}, {"_id":0}))
-    
-    if not data:
-        return jsonify([]),200
-    return jsonify(data), 200, {'Content-Type': 'application/json'}
+def fetch_one_project():
+    try:
+        # ✅ 獲取 `projectID` 並轉換為 `int`
+        projectID = request.args.get("projectID")
+
+        if not projectID:
+            return jsonify({"error": "Missing projectID"}), 400
+        
+        try:
+            projectID = int(projectID)
+        except ValueError:
+            return jsonify({"error": "Invalid projectID"}), 400
+
+        # ✅ 依 `projectID` 查找 `projectMemberCollection` 中的專案
+        projectData = projectMemberCollection.find_one({"projectID": projectID}, {"_id": 0})
+
+        if not projectData:
+            return jsonify({"error": "Project not found"}), 404
+
+        # ✅ 取得 `members` 陣列中的 `lineliffID`
+        memberIDs = [member["lineliffID"] for member in projectData.get("members", [])]
+
+        # ✅ 在 `memberCollection` 中查找對應的會員資料
+        membersData = list(memberCollection.find({"userLineliffID": {"$in": memberIDs}}, {"_id": 0}))
+
+        # ✅ 將會員資訊加入 `projectData` 回傳
+        projectData["members"] = membersData
+
+        return json_util.dumps(projectData), 200, {'Content-Type': 'application/json'}
+
+    except Exception as e:
+        print(f"❌ Error fetching project: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
+
 
 @projectBp.route("/editProject", methods=['POST'])
 def edit_project():

@@ -48,7 +48,7 @@ def get_all_projects():
         # ✅ 在 `projectCollection` 中查找所有符合的 `projectID`
         projects = list(projectCollection.find({"projectID": {"$in": projectIDs}}, {"_id": 0}))
 
-        return json_util.dumps({"projects": projects}), 200, {'Content-Type': 'application/json'}
+        return json_util.dumps(projects), 200, {'Content-Type': 'application/json'}
 
     except Exception as e:
         print(f"❌ Error fetching projects: {e}")

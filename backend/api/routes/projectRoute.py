@@ -165,14 +165,19 @@ def fetch_one_project():
         # ✅ 在 `memberCollection` 中查找對應的會員資料
         membersData = list(memberCollection.find({"userLineliffID": {"$in": memberIDs}}, {"_id": 0}))
 
-        # ✅ 將會員資訊加入 `projectData` 回傳
+        # ✅ 在 `billingCollection` 中查找該 `projectID` 的帳單
+        billingsData = list(billingCollection.find({"projectID": projectID}, {"_id": 0}))
+
+        # ✅ 將會員資訊和帳單資訊加入 `projectData` 回傳
         projectData["members"] = membersData
+        projectData["billings"] = billingsData
 
         return json_util.dumps(projectData), 200, {'Content-Type': 'application/json'}
 
     except Exception as e:
         print(f"❌ Error fetching project: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
+
 
 
 @projectBp.route("/editProject", methods=['POST'])

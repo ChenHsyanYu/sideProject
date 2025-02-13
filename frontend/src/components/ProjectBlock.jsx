@@ -6,7 +6,10 @@ import { RiArrowRightFill } from "react-icons/ri";
 import '../css/startPageAndProjectBlock.css';
 import categoryIcons from "../components/categoryIcons";
 import ProgressBar from './ProgressBar';
+
 // import 
+
+
 
 const ProjectBlock = ({projectInfo}) =>{
     const [keyboardIsOpened, setKeyboard] = useState(false);

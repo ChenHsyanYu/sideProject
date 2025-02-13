@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name: 'users',
     initialState:{
-        userLineliffID: '345',
+        userLineliffID: '123',
     },
     reducers:{
         setUserID: (state, action) =>{

@@ -9,14 +9,14 @@ billingDB = db['projects']
 billingCollection = billingDB['billing']
 
 
-@billingBp.route('/editBill', methods=['POST'])
-def editBills():
+# @billingBp.route('/editBill', methods=['POST'])
+# def editBills():
     
     
-@billingBp.route('/addBill', methods=['POST'])
-def addBill(): 
+# @billingBp.route('/addBill', methods=['POST'])
+# def addBill(): 
  
  
-@billingBp.route('/deleteBill', methods=['DELETE'])
-def deleteBill():
+# @billingBp.route('/deleteBill', methods=['DELETE'])
+# def deleteBill():
     

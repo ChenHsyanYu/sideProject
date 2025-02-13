@@ -129,17 +129,17 @@ def edit_project():
     try:
         # ✅ 获取 JSON 数据
         data = request.get_json()
-        projectId = data.get("projectID")  # 获取 projectId
+        projectID = data.get("projectID")  # 获取 projectID
 
-        if not projectId:
-            return jsonify({"error": "Missing projectId"}), 400
+        if not projectID:
+            return jsonify({"error": "Missing projectID"}), 400
 
-        # ✅ 移除 projectId，防止修改 _id
-        updateData = {k: v for k, v in data.items() if k != "projectId"}
+        # ✅ 移除 projectID，防止修改 _id
+        updateData = {k: v for k, v in data.items() if k != "projectID"}
 
         # ✅ 在 projectCollection 中更新该项目
         result = projectCollection.update_one(
-            {"projectId": int(projectId)},  # 条件：匹配 projectId
+            {"projectID": int(projectID)},  # 条件：匹配 projectID
             {"$set": updateData}  # 更新数据
         )
 
